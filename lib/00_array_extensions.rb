@@ -5,6 +5,8 @@
 
 class Array
   def sum
+    return 0 if self == []
+    self.reduce(:+)
   end
 end
 
@@ -16,9 +18,11 @@ end
 
 class Array
   def square!
+    self.map! {|num| num ** 2}
   end
 
   def square
+    s2 = self.dup.square!
   end
 end
 
@@ -36,7 +40,15 @@ end
 
 class Array
   def my_uniq
+    unique = []
+    self.each do |el|
+      if unique.include?(el) == false
+        unique << el
+      end
+    end
+    unique
   end
+
 end
 
 # Two Sum
@@ -57,6 +69,16 @@ end
 
 class Array
   def two_sum
+    zero_sum = []
+    self[0...-1].each_with_index do |num, idx|
+      self[idx+1..-1].each_with_index do |n, i|
+
+        if num + n == 0
+          zero_sum << [idx, i+idx+1]
+        end
+      end
+    end
+    zero_sum
   end
 end
 
@@ -69,6 +91,13 @@ end
 
 class Array
   def median
+    if self.length < 1
+      return nil
+    elsif self.length.odd?
+      return self.sort[self.length / 2]
+    else
+      return (self.sort[self.length / 2] + self.sort[self.length / 2 -1]) / 2.0
+    end
   end
 end
 
@@ -121,6 +150,20 @@ end
 
 class Array
   def my_transpose
+    result = []
+    self.length.times do
+      result << []
+    end
+    i = 0
+    while i < self.length
+      j = 0
+      while j < self.length
+        result[i][j] = self[j][i]
+        j += 1
+      end
+      i += 1
+    end
+    result
   end
 end
 
