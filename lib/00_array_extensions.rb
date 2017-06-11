@@ -22,7 +22,7 @@ class Array
   end
 
   def square
-    s2 = self.dup.square!
+    self.dup.square!
   end
 end
 
@@ -40,13 +40,11 @@ end
 
 class Array
   def my_uniq
-    unique = []
+    unique = Hash.new(0)
     self.each do |el|
-      if unique.include?(el) == false
-        unique << el
-      end
+      unique[el] += 1
     end
-    unique
+    unique.keys
   end
 
 end

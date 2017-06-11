@@ -18,6 +18,15 @@
 
 class String
   def caesar(shift)
+  alphabet = ("a".."z").to_a
+  result = self.chars.map do |el|
+      if alphabet.index(el)+shift > 25
+        alphabet[(alphabet.index(el)+shift) % alphabet.length]
+      else
+        alphabet[alphabet.index(el)+shift]
+      end
+    end
+    result.join
   end
 end
 
@@ -36,6 +45,19 @@ end
 
 class Hash
   def difference(other_hash)
+    result = {}
+    self_uniques = self.reject {|ele| other_hash[ele]}
+    other_uniques = other_hash.reject {|el| self[el]}
+
+    self_uniques.each do |key, value|
+      result[key] = value
+    end
+
+    other_uniques.each do |k, v|
+      result[k] = v
+    end
+
+    result
   end
 end
 
@@ -98,6 +120,16 @@ end
 
 class Fixnum
   def stringify(base)
+    hexadecimal = %w(0 1 2 3 4 5 6 7 8 9 a b c d e f)
+    result = []
+    new_base = 1
+
+      until self / new_base == 0
+        result.unshift(hexadecimal[self / new_base % base])
+        new_base *= base
+      end
+
+    result.join("")
   end
 end
 
